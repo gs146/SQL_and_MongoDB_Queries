@@ -1,0 +1,43 @@
+
+> var c1=db.practice.find()
+> while(c1.hasNext()){print(tojson(c1.next()))}
+{
+	"_id" : ObjectId("5d9d882f21e67fd4ab3e9a8e"),
+	"cust_id" : "A123",
+	"amount" : 500,
+	"status" : "A"
+}
+{
+	"_id" : ObjectId("5d9d883721e67fd4ab3e9a8f"),
+	"cust_id" : "A123",
+	"amount" : 250,
+	"status" : "A"
+}
+{
+	"_id" : ObjectId("5d9d884021e67fd4ab3e9a90"),
+	"cust_id" : "A123",
+	"amount" : 300,
+	"status" : "D"
+}
+{
+	"_id" : ObjectId("5d9d884c21e67fd4ab3e9a91"),
+	"cust_id" : "B212",
+	"amount" : 200,
+	"status" : "A"
+}
+
+> var c1=db.practice.find()
+> c1.limit(2)
+{ "_id" : ObjectId("5d9d882f21e67fd4ab3e9a8e"), "cust_id" : "A123", "amount" : 500, "status" : "A" }
+{ "_id" : ObjectId("5d9d883721e67fd4ab3e9a8f"), "cust_id" : "A123", "amount" : 250, "status" : "A" }
+> var c1=db.practice.find()
+> c1.skip(2)
+{ "_id" : ObjectId("5d9d884021e67fd4ab3e9a90"), "cust_id" : "A123", "amount" : 300, "status" : "D" }
+{ "_id" : ObjectId("5d9d884c21e67fd4ab3e9a91"), "cust_id" : "B212", "amount" : 200, "status" : "A" }
+> var c1=db.practice.find()
+> c1.sort({cust_id:-1})
+{ "_id" : ObjectId("5d9d884c21e67fd4ab3e9a91"), "cust_id" : "B212", "amount" : 200, "status" : "A" }
+{ "_id" : ObjectId("5d9d882f21e67fd4ab3e9a8e"), "cust_id" : "A123", "amount" : 500, "status" : "A" }
+{ "_id" : ObjectId("5d9d883721e67fd4ab3e9a8f"), "cust_id" : "A123", "amount" : 250, "status" : "A" }
+{ "_id" : ObjectId("5d9d884021e67fd4ab3e9a90"), "cust_id" : "A123", "amount" : 300, "status" : "D" }
+

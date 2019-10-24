@@ -1,0 +1,189 @@
+
+
+
+
+mysql> use gaurav;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_gaurav |
++-----------------+
+| department      |
+| employee        |
+| location        |
+| project         |
++-----------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from employee;
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4305 | def   | def-411015,pune | 2017-12-12 |  20000 |    5 | NULL  |
+| 4347 | abc   | abc-411015,pune | 2017-11-12 |  17000 |    1 | NULL  |
+| 4348 | bcd   | bcd-411015,pune | 2017-11-12 |  18000 |    2 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  19000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from department;
++-----+-------+
+| DID | DName |
++-----+-------+
+|   1 | IT    |
+|   2 | COMP  |
+|   3 | E&TC  |
+|   4 | MECH  |
+|   5 | CIVIL |
++-----+-------+
+5 rows in set (0.01 sec)
+
+mysql> select * from location;
++-----+--------+
+| LID | LName  |
++-----+--------+
+| 111 | pune   |
+| 222 | pune   |
+| 333 | mumbai |
+| 444 | mumbai |
+| 555 | nashik |
++-----+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from project;
++-----+-----------------+------+
+| PID | PName           | LID  |
++-----+-----------------+------+
+|  11 | web-develop     |  111 |
+|  22 | app-develop     |  222 |
+|  33 | database-manag. |  333 |
+|  44 | full-stack      |  444 |
+|  55 | game            |  555 |
++-----+-----------------+------+
+5 rows in set (0.00 sec)
+mysql> select * from employee where salary in (select max(salary) from employee);
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4305 | def   | def-411015,pune | 2017-12-12 |  20000 |    5 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where salary >=all (select salary from employee);
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4305 | def   | def-411015,pune | 2017-12-12 |  20000 |    5 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where salary >=some(select salary from employee);
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4305 | def   | def-411015,pune | 2017-12-12 |  20000 |    5 | NULL  |
+| 4347 | abc   | abc-411015,pune | 2017-11-12 |  17000 |    1 | NULL  |
+| 4348 | bcd   | bcd-411015,pune | 2017-11-12 |  18000 |    2 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  19000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select salary from employee where salary in (select max(salary) from
+    -> employee);
++--------+
+| salary |
++--------+
+|  20000 |
+|  20000 |
++--------+
+2 rows in set (0.01 sec)
+
+mysql> select ename from employee where Did in (select Did from employee where
+ename='abc');
++-------+
+| ename |
++-------+
+| abc   |
++-------+
+1 row in set (0.03 sec)
+
+mysql> insert into customer values('abhi', 001);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into customer values('ravi', 002);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into customer values('kavi', 003);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into customer values('tavi', 004);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from customer;
++-------+------+
+| cname | cid  |
++-------+------+
+| abhi  |    1 |
+| ravi  |    2 |
+| kavi  |    3 |
+| tavi  |    4 |
++-------+------+
+4 rows in set (0.00 sec)
+
+mysql> select ename from employee where exists (select cname from customer where
+cname=employee.ename);
++-------+
+| ename |
++-------+
+| abc   |
+| bcd   |
+| def   |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> select salary from employee where salary <> any (select employee.salary
+from employee where employee.Did=5);
++--------+
+| salary |
++--------+
+| 17000  |
+| 18000  |
+| 19000  |
+| 20000  |
+| 21000  |
+| 22000  |
+| 22000  |
+| 22000  |
++--------+
+8 rows in set (0.00 sec)
+
+mysql> select ename from employee where exists (select cname from customer where
+cname=employee.ename);
++-------+
+| ename |
++-------+
+| abc   |
+| bcd   |
+| def   |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> select ename from employee where not exists (select cname from customer
+where cname=employee.ename);
++-------+
+| ename |
++-------+
+| cde   |
+| cde   |
+| efg   |
+| fgh   |
+| fgh   |
++-------+
+5 rows in set (0.00 sec)

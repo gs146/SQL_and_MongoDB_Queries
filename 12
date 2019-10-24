@@ -1,0 +1,47 @@
+
+> db.user.find().pretty()
+{
+	"_id" : ObjectId("5d9dd463873b00db44a59f92"),
+	"id" : 1,
+	"name" : "gaurav ",
+	"status" : "A",
+	"age" : 50
+}
+{
+	"_id" : ObjectId("5d9dd474873b00db44a59f93"),
+	"id" : 2,
+	"name" : "Anush ",
+	"status" : "A",
+	"age" : 30
+}
+{
+	"_id" : ObjectId("5d9dd482873b00db44a59f94"),
+	"id" : 3,
+	"name" : "Ben ",
+	"status" : "B",
+	"age" : 40
+}
+
+> db.user.find({},{id:1,status:1})
+{ "_id" : ObjectId("5d9dd463873b00db44a59f92"), "id" : 1, "status" : "A" }
+{ "_id" : ObjectId("5d9dd474873b00db44a59f93"), "id" : 2, "status" : "A" }
+{ "_id" : ObjectId("5d9dd482873b00db44a59f94"), "id" : 3, "status" : "B" }
+
+> db.user.find({status:'A'})
+{ "_id" : ObjectId("5d9dd463873b00db44a59f92"), "id" : 1, "name" : "gaurav ", "status" : "A", "age" : 50 }
+{ "_id" : ObjectId("5d9dd474873b00db44a59f93"), "id" : 2, "name" : "Anush ", "status" : "A", "age" : 30 }
+
+> db.user.find({age:{$gt:40}})
+{ "_id" : ObjectId("5d9dd463873b00db44a59f92"), "id" : 1, "name" : "gaurav ", "status" : "A", "age" : 50 }
+
+> db.user.find({name:{$regex:/in$/}})
+{ "_id" : ObjectId("5d9dd474873b00db44a59f93"), "id" : 2, "name" : "Anush ", "status" : "A", "age" : 30 }
+
+> db.user.find({status:'A'}).sort({age:1})
+{ "_id" : ObjectId("5d9dd474873b00db44a59f93"), "id" : 2, "name" : "Anush ", "status" : "A", "age" : 30 }
+{ "_id" : ObjectId("5d9dd463873b00db44a59f92"), "id" : 1, "name" : "gaurav ", "status" : "A", "age" : 50 }
+
+> db.user.find({likes:null})
+{ "_id" : ObjectId("5d9dd463873b00db44a59f92"), "id" : 1, "name" : "gaurav ", "status" : "A", "age" : 50 }
+{ "_id" : ObjectId("5d9dd474873b00db44a59f93"), "id" : 2, "name" : "Anush ", "status" : "A", "age" : 30 }
+{ "_id" : ObjectId("5d9dd482873b00db44a59f94"), "id" : 3, "name" : "Ben ", "status" : "B", "age" : 40 }

@@ -1,0 +1,119 @@
+mysql> delimiter $$
+mysql> drop procedure if exists empcursor $$
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+mysql> create procedure empcursor()
+    -> BEGIN
+    -> declare id int;
+    -> declare name varchar(20);
+    -> declare sal int;
+    -> declare flag int default 0;
+    -> Declare c1 cursor for select eid, ename, salary from employee;
+    -> Declare continue handler for not found set flag=1;
+    -> open c1;
+    -> l1 : loop
+    -> fetch c1 into id, name, sal;
+    -> select id, name, sal;
+    -> if sal<=16000 then
+    -> select 'SECOND CLASS';
+    -> elseif sal>16000 then
+    -> select 'FIRST CLASS';
+    -> end if;
+    -> if flag = 1 then
+    -> LEAVE l1;
+    -> end if;
+    -> end loop l1;
+    -> CLOSE c1;
+    -> end $$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call empcursor();
+    -> $$
++------+--------+-------+
+| id   | name   | sal   |
++------+--------+-------+
+|    1 | gaurav | 10000 |
++------+--------+-------+
+1 row in set (0.00 sec)
+
++--------------+
+| SECOND CLASS |
++--------------+
+| SECOND CLASS |
++--------------+
+1 row in set (0.00 sec)
+
++------+-------+-------+
+| id   | name  | sal   |
++------+-------+-------+
+|    2 | jaggu | 20000 |
++------+-------+-------+
+1 row in set (0.00 sec)
+
++-------------+
+| FIRST CLASS |
++-------------+
+| FIRST CLASS |
++-------------+
+1 row in set (0.00 sec)
+
++------+-------+-------+
+| id   | name  | sal   |
++------+-------+-------+
+|    3 | mohit | 10000 |
++------+-------+-------+
+1 row in set (0.00 sec)
+
++--------------+
+| SECOND CLASS |
++--------------+
+| SECOND CLASS |
++--------------+
+1 row in set (0.00 sec)
+
++------+------+-------+
+| id   | name | sal   |
++------+------+-------+
+|    4 | ht   | 25000 |
++------+------+-------+
+1 row in set (0.00 sec)
+
++-------------+
+| FIRST CLASS |
++-------------+
+| FIRST CLASS |
++-------------+
+1 row in set (0.00 sec)
+
++------+------+-------+
+| id   | name | sal   |
++------+------+-------+
+|    5 | csd  | 15000 |
++------+------+-------+
+1 row in set (0.00 sec)
+
++--------------+
+| SECOND CLASS |
++--------------+
+| SECOND CLASS |
++--------------+
+1 row in set (0.00 sec)
+
++------+------+-------+
+| id   | name | sal   |
++------+------+-------+
+|    5 | csd  | 15000 |
++------+------+-------+
+1 row in set (0.00 sec)
+
++--------------+
+| SECOND CLASS |
++--------------+
+| SECOND CLASS |
++--------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+

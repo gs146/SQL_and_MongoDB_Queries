@@ -1,0 +1,53 @@
+mysql> use gaurav
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> drop procedure if exists hello$$
+    -> ;
+Query OK, 0 rows affected, 1 warning (0.13 sec)
+
+
+mysql> delimiter $$
+mysql> create procedure hello() begin select 'Hello gaurav here';
+    -> end $$
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> call hello() $$
++-------------------+
+| Hello gaurav here |
++-------------------+
+| Hello gaurav here |
++-------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+mysql> CREATE PROCEDURE even_odd(num1 int) begin  if mod(num1,2)=0 then select 'EVEN it is'; else select 'ODD it is'; end if; end $$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call even_odd(5)
+    -> $$
++-----------+
+| ODD it is |
++-----------+
+| ODD it is |
++-----------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call even_odd(12)$$
++------------+
+| EVEN it is |
++------------+
+| EVEN it is |
++------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+

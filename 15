@@ -1,0 +1,50 @@
+
+> db.user.find().pretty()
+{
+	"_id" : ObjectId("5d9dd463873b00db44a59f92"),
+	"id" : 1,
+	"name" : "gaurav ",
+	"status" : "A",
+	"age" : 50
+}
+{
+	"_id" : ObjectId("5d9dd474873b00db44a59f93"),
+	"id" : 2,
+	"name" : "Ben ",
+	"status" : "A",
+	"age" : 30
+}
+{
+	"_id" : ObjectId("5d9dd482873b00db44a59f94"),
+	"id" : 3,
+	"name" : "hero ",
+	"status" : "B",
+	"age" : 40
+}
+{
+	"_id" : ObjectId("5d9d8a6c302300349ac1f2d3"),
+	"id" : 1,
+	"name" : "Alan",
+	"status" : "A",
+	"age" : 40
+}
+
+> db.user.aggregate({$group:{_id:"$id",age:{$avg:"$age"}}})
+{ "_id" : 3, "age" : 40 }
+{ "_id" : 2, "age" : 30 }
+{ "_id" : 1, "age" : 45 }
+
+> db.user.aggregate({$group:{_id:"$id",totsal:{$max:"$age"}}})
+{ "_id" : 3, "totsal" : 40 }
+{ "_id" : 2, "totsal" : 30 }
+{ "_id" : 1, "totsal" : 50 }
+
+> db.user.aggregate({$group:{_id:"$id",age:{$sum:"$age"}}})
+{ "_id" : 3, "age" : 40 }
+{ "_id" : 2, "age" : 30 }
+{ "_id" : 1, "age" : 90 }
+
+> db.user.aggregate({$group:{_id:"$id",age:{$addToSet:"$age"}}})
+{ "_id" : 3, "age" : [ 40 ] }
+{ "_id" : 2, "age" : [ 30 ] }
+{ "_id" : 1, "age" : [ 40, 50 ] }

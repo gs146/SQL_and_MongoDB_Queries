@@ -1,0 +1,220 @@
+
+mysql> use gaurav;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from department;
++-----+-------+
+| DID | DName |
++-----+-------+
+|   1 | IT    |
+|   2 | COMP  |
+|   3 | E&TC  |
+|   4 | MECH  |
+|   5 | CIVIL |
++-----+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee;
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4305 | def   | def-411015,pune | 2017-12-12 |  10000 |    5 | NULL  |
+| 4347 | abc   | abc-411015,pune | 2017-11-12 |  10000 |    1 | NULL  |
+| 4348 | bcd   | bcd-411015,pune | 2017-11-12 |  10000 |    2 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  10000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  10000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> update employee
+    -> set
+    -> salary=salary+10000;
+Query OK, 5 rows affected (0.07 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from employee;
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4305 | def   | def-411015,pune | 2017-12-12 |  20000 |    5 | NULL  |
+| 4347 | abc   | abc-411015,pune | 2017-11-12 |  20000 |    1 | NULL  |
+| 4348 | bcd   | bcd-411015,pune | 2017-11-12 |  20000 |    2 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  20000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+5 rows in set (0.01 sec)
+
+mysql> select * from employee
+    -> where ename='c%';
+Empty set (0.00 sec)
+
+mysql> select * from employee where ename like 'c%';
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  20000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where ename like 'c__';
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  20000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where address like '%pune';
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4305 | def   | def-411015,pune | 2017-12-12 |  20000 |    5 | NULL  |
+| 4347 | abc   | abc-411015,pune | 2017-11-12 |  20000 |    1 | NULL  |
+| 4348 | bcd   | bcd-411015,pune | 2017-11-12 |  20000 |    2 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  20000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+5 rows in set (0.00 sec)
+
+
+mysql> select * from employee where ename like 'cde%';
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  20000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where ename like '_b%';
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4347 | abc   | abc-411015,pune | 2017-11-12 |  20000 |    1 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where ename like '___';
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4305 | def   | def-411015,pune | 2017-12-12 |  20000 |    5 | NULL  |
+| 4347 | abc   | abc-411015,pune | 2017-11-12 |  20000 |    1 | NULL  |
+| 4348 | bcd   | bcd-411015,pune | 2017-11-12 |  20000 |    2 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  20000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee where address like '%d_%';
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4305 | def   | def-411015,pune | 2017-12-12 |  20000 |    5 | NULL  |
+| 4348 | bcd   | bcd-411015,pune | 2017-11-12 |  20000 |    2 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  20000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from employee where address not like 'bcd-411015,pune';
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4305 | def   | def-411015,pune | 2017-12-12 |  20000 |    5 | NULL  |
+| 4347 | abc   | abc-411015,pune | 2017-11-12 |  20000 |    1 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  20000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select eid,ename,salary+4000 as newsal from employee;
++------+-------+--------+
+| eid  | ename | newsal |
++------+-------+--------+
+| 4305 | def   |  24000 |
+| 4347 | abc   |  24000 |
+| 4348 | bcd   |  24000 |
+| 4349 | cde   |  24000 |
+| 4350 | cde   |  24000 |
++------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update employee
+    -> set salary=salary-3000
+    -> where eid=4347;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee set salary=salary-2000 where eid=4348;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee set salary=salary-1000 where eid=4350;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee where salary between 18000 and 20400;
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4305 | def   | def-411015,pune | 2017-12-12 |  20000 |    5 | NULL  |
+| 4348 | bcd   | bcd-411015,pune | 2017-11-12 |  18000 |    2 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  19000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from employee where salary>18000 and salary<20000;
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  19000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee order by salary;
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4347 | abc   | abc-411015,pune | 2017-11-12 |  17000 |    1 | NULL  |
+| 4348 | bcd   | bcd-411015,pune | 2017-11-12 |  18000 |    2 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  19000 |    4 | NULL  |
+| 4305 | def   | def-411015,pune | 2017-12-12 |  20000 |    5 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee order by salary desc;
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4305 | def   | def-411015,pune | 2017-12-12 |  20000 |    5 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  19000 |    4 | NULL  |
+| 4348 | bcd   | bcd-411015,pune | 2017-11-12 |  18000 |    2 | NULL  |
+| 4347 | abc   | abc-411015,pune | 2017-11-12 |  17000 |    1 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| eid     | int(11)     | NO   | PRI | NULL    |       |
+| ename   | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(30) | YES  |     | NULL    |       |
+| DOJ     | date        | YES  |     | NULL    |       |
+| salary  | int(11)     | YES  |     | 10000   |       |
+| Pid     | int(11)     | YES  |     | NULL    |       |
+| email   | varchar(30) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> 
+
+

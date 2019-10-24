@@ -1,0 +1,424 @@
+mysql> delete from employee where name=NULL;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from employee;
++--------+--------+------+------------+
+| name   | salary | id   | doj        |
++--------+--------+------+------------+
+| gaurav |  12000 |    1 | 1999-01-19 |
+| sharma |  23000 |    2 | 1999-01-29 |
+| eee    |  45000 |    3 | 1999-04-19 |
+| ajay   |  56000 |    4 | 1988-01-29 |
+| NULL   |   NULL | NULL | NULL       |
+| NULL   |   NULL | NULL | NULL       |
+| NULL   |   NULL | NULL | NULL       |
+| NULL   |   NULL | NULL | NULL       |
++--------+--------+------+------------+
+8 rows in set (0.00 sec)
+
+mysql> DELETE FROM employee WHERE name IS NULL;
+Query OK, 4 rows affected (0.09 sec)
+
+mysql> select * from employee;
++--------+--------+------+------------+
+| name   | salary | id   | doj        |
++--------+--------+------+------------+
+| gaurav |  12000 |    1 | 1999-01-19 |
+| sharma |  23000 |    2 | 1999-01-29 |
+| eee    |  45000 |    3 | 1999-04-19 |
+| ajay   |  56000 |    4 | 1988-01-29 |
++--------+--------+------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from employee where doj>'1999-04-12';
++------+--------+------+------------+
+| name | salary | id   | doj        |
++------+--------+------+------------+
+| eee  |  45000 |    3 | 1999-04-19 |
++------+--------+------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where doj<now();
++--------+--------+------+------------+
+| name   | salary | id   | doj        |
++--------+--------+------+------------+
+| gaurav |  12000 |    1 | 1999-01-19 |
+| sharma |  23000 |    2 | 1999-01-29 |
+| eee    |  45000 |    3 | 1999-04-19 |
+| ajay   |  56000 |    4 | 1988-01-29 |
++--------+--------+------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select doj('1999-01-01') ;
+ERROR 1305 (42000): FUNCTION practise.doj does not exist
+mysql> select day('1999-01-01') ;
++-------------------+
+| day('1999-01-01') |
++-------------------+
+|                 1 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where doj<some(select * from employee where name ='gaurav');
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select * from employee where name=some(select * from employee where name ='gaurav');
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select * from employee where name=some(select id from employee where name ='gaurav');
+Empty set, 4 warnings (0.00 sec)
+
+mysql> select * from employee where name=all(select id from employee where name ='gaurav');
+Empty set (0.00 sec)
+
+mysql> select some * from employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from employee' at line 1
+mysql> select all * from employee;
++--------+--------+------+------------+
+| name   | salary | id   | doj        |
++--------+--------+------+------------+
+| gaurav |  12000 |    1 | 1999-01-19 |
+| sharma |  23000 |    2 | 1999-01-29 |
+| eee    |  45000 |    3 | 1999-04-19 |
+| ajay   |  56000 |    4 | 1988-01-29 |
++--------+--------+------+------------+
+4 rows in set (0.00 sec)
+
+mysql> create index on employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'on employee' at line 1
+mysql> create index sd on employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create index sd on employee(salary);
+Query OK, 0 rows affected (0.47 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++-----+--------+-------+-------+---------+-------+
+| rno | name   | marks | phone | address | bname |
++-----+--------+-------+-------+---------+-------+
+|   1 | xxxx   |    34 |  9192 | PUNE    | NULL  |
+|   2 | tttt   |    54 | 91234 | PUNE    | NULL  |
+|   3 | deepak |   133 | 91234 | PUNE    | NULL  |
+|   5 | gs     |    33 | 91234 | PUNE    | NULL  |
+|   6 | tttt   |    54 | 91234 | PUNE    | NULL  |
+|   7 | aman   |   344 |  9192 | PUNE    | NULL  |
+|  12 | ht     |   114 | 91234 | PUNE    | NULL  |
+|  13 | tiwari |    94 |   892 | AIT     | NULL  |
++-----+--------+-------+-------+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> select * from course;
++------+-----+
+| id   | rno |
++------+-----+
+|    1 |   1 |
+|    2 |   2 |
+|    4 |   3 |
+|    5 |   4 |
+|    6 |   5 |
+|    3 |  10 |
+|    3 |  12 |
+|    6 |  13 |
++------+-----+
+8 rows in set (0.00 sec)
+
+mysql> select name,marks from student where exists(select * from course where course.rno=student.rno);
++--------+-------+
+| name   | marks |
++--------+-------+
+| xxxx   |    34 |
+| tttt   |    54 |
+| deepak |   133 |
+| gs     |    33 |
+| ht     |   114 |
+| tiwari |    94 |
++--------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select name,marks from student where exists(select * from course where student.rno=1);
++------+-------+
+| name | marks |
++------+-------+
+| xxxx |    34 |
++------+-------+
+1 row in set (0.00 sec)
+
+mysql> select name,marks from student where exists(select * from course where student.rno=34);
+Empty set (0.00 sec)
+
+mysql> select * from student where rno=34;
+Empty set (0.00 sec)
+
+mysql> select * from student where rno<>=34;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '<>=34' at line 1
+mysql> select * from student where rno<>34;
++-----+--------+-------+-------+---------+-------+
+| rno | name   | marks | phone | address | bname |
++-----+--------+-------+-------+---------+-------+
+|   1 | xxxx   |    34 |  9192 | PUNE    | NULL  |
+|   2 | tttt   |    54 | 91234 | PUNE    | NULL  |
+|   3 | deepak |   133 | 91234 | PUNE    | NULL  |
+|   5 | gs     |    33 | 91234 | PUNE    | NULL  |
+|   6 | tttt   |    54 | 91234 | PUNE    | NULL  |
+|   7 | aman   |   344 |  9192 | PUNE    | NULL  |
+|  12 | ht     |   114 | 91234 | PUNE    | NULL  |
+|  13 | tiwari |    94 |   892 | AIT     | NULL  |
++-----+--------+-------+-------+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> select name,marks from student where exits(select * from course where course.rno=student.no);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from course where course.rno=student.no)' at line 1
+mysql> select name,marks from student where exists(select * from course where course.rno=student.no);
+ERROR 1054 (42S22): Unknown column 'student.no' in 'where clause'
+mysql> select name,marks from student where exists(select * from course where course.rno=student.rno);
++--------+-------+
+| name   | marks |
++--------+-------+
+| xxxx   |    34 |
+| tttt   |    54 |
+| deepak |   133 |
+| gs     |    33 |
+| ht     |   114 |
+| tiwari |    94 |
++--------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select name,marks from student where exists(select * from course where course.rno=student.rno and student.marks>60);
++--------+-------+
+| name   | marks |
++--------+-------+
+| deepak |   133 |
+| ht     |   114 |
+| tiwari |    94 |
++--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select name,marks from student where>some(select * from course where course.rno=student.rno);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '>some(select * from course where course.rno=student.rno)' at line 1
+mysql> select name,marks from student>some(select * from course where course.rno=student.rno);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '>some(select * from course where course.rno=student.rno)' at line 1
+mysql> select name,marks from student where rno > some (select * from course where course.rno=student.rno);
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select name,marks from student where rno > some (select rno  from course where course.rno=student.rno);
+Empty set (0.00 sec)
+
+mysql> select name,marks from student where rno > all (select rno  from course where course.rno=student.rno);
++------+-------+
+| name | marks |
++------+-------+
+| tttt |    54 |
+| aman |   344 |
++------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select name,marks from student where rno > all (select rno  from course where course.rno=student.rno);
++------+-------+
+| name | marks |
++------+-------+
+| tttt |    54 |
+| aman |   344 |
++------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from course;
++------+-----+
+| id   | rno |
++------+-----+
+|    1 |   1 |
+|    2 |   2 |
+|    4 |   3 |
+|    5 |   4 |
+|    6 |   5 |
+|    3 |  10 |
+|    3 |  12 |
+|    6 |  13 |
++------+-----+
+8 rows in set (0.00 sec)
+
+mysql> select * from student;
++-----+--------+-------+-------+---------+-------+
+| rno | name   | marks | phone | address | bname |
++-----+--------+-------+-------+---------+-------+
+|   1 | xxxx   |    34 |  9192 | PUNE    | NULL  |
+|   2 | tttt   |    54 | 91234 | PUNE    | NULL  |
+|   3 | deepak |   133 | 91234 | PUNE    | NULL  |
+|   5 | gs     |    33 | 91234 | PUNE    | NULL  |
+|   6 | tttt   |    54 | 91234 | PUNE    | NULL  |
+|   7 | aman   |   344 |  9192 | PUNE    | NULL  |
+|  12 | ht     |   114 | 91234 | PUNE    | NULL  |
+|  13 | tiwari |    94 |   892 | AIT     | NULL  |
++-----+--------+-------+-------+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> select name,marks from student where rno > all (select rno  from course where course.rno=student.rno);
++------+-------+
+| name | marks |
++------+-------+
+| tttt |    54 |
+| aman |   344 |
++------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select name,marks from student where rno = all (select rno  from course where course.rno=student.rno);
++--------+-------+
+| name   | marks |
++--------+-------+
+| xxxx   |    34 |
+| tttt   |    54 |
+| deepak |   133 |
+| gs     |    33 |
+| tttt   |    54 |
+| aman   |   344 |
+| ht     |   114 |
+| tiwari |    94 |
++--------+-------+
+8 rows in set (0.00 sec)
+
+mysql> select name,marks from student where rno < all (select rno  from course where course.rno=student.rno);
++------+-------+
+| name | marks |
++------+-------+
+| tttt |    54 |
+| aman |   344 |
++------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select name,marks from student where rno = some (select rno  from course where course.rno=student.rno);
++--------+-------+
+| name   | marks |
++--------+-------+
+| xxxx   |    34 |
+| tttt   |    54 |
+| deepak |   133 |
+| gs     |    33 |
+| ht     |   114 |
+| tiwari |    94 |
++--------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select name,marks from student where rno = all (select rno  from course where course.rno=student.rno);
++--------+-------+
+| name   | marks |
++--------+-------+
+| xxxx   |    34 |
+| tttt   |    54 |
+| deepak |   133 |
+| gs     |    33 |
+| tttt   |    54 |
+| aman   |   344 |
+| ht     |   114 |
+| tiwari |    94 |
++--------+-------+
+8 rows in set (0.00 sec)
+
+mysql> select * from student;
++-----+--------+-------+-------+---------+-------+
+| rno | name   | marks | phone | address | bname |
++-----+--------+-------+-------+---------+-------+
+|   1 | xxxx   |    34 |  9192 | PUNE    | NULL  |
+|   2 | tttt   |    54 | 91234 | PUNE    | NULL  |
+|   3 | deepak |   133 | 91234 | PUNE    | NULL  |
+|   5 | gs     |    33 | 91234 | PUNE    | NULL  |
+|   6 | tttt   |    54 | 91234 | PUNE    | NULL  |
+|   7 | aman   |   344 |  9192 | PUNE    | NULL  |
+|  12 | ht     |   114 | 91234 | PUNE    | NULL  |
+|  13 | tiwari |    94 |   892 | AIT     | NULL  |
++-----+--------+-------+-------+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> select name,marks from student where rno = all (select rno  from course where course.rno=student.rno);
++--------+-------+
+| name   | marks |
++--------+-------+
+| xxxx   |    34 |
+| tttt   |    54 |
+| deepak |   133 |
+| gs     |    33 |
+| tttt   |    54 |
+| aman   |   344 |
+| ht     |   114 |
+| tiwari |    94 |
++--------+-------+
+8 rows in set (0.00 sec)
+
+mysql> select name,marks from student where rno = some (select rno  from course where course.rno=student.rno);
++--------+-------+
+| name   | marks |
++--------+-------+
+| xxxx   |    34 |
+| tttt   |    54 |
+| deepak |   133 |
+| gs     |    33 |
+| ht     |   114 |
+| tiwari |    94 |
++--------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select name,marks from student where rno = all(select rno from course where course.rno=student.rno);
++--------+-------+
+| name   | marks |
++--------+-------+
+| xxxx   |    34 |
+| tttt   |    54 |
+| deepak |   133 |
+| gs     |    33 |
+| tttt   |    54 |
+| aman   |   344 |
+| ht     |   114 |
+| tiwari |    94 |
++--------+-------+
+8 rows in set (0.00 sec)
+
+mysql> select name,marks from student where rno < all(select rno from course where course.rno=student.rno);
++------+-------+
+| name | marks |
++------+-------+
+| tttt |    54 |
+| aman |   344 |
++------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select name,marks from student where rno = some(select rno from course where course.rno=student.rno);
++--------+-------+
+| name   | marks |
++--------+-------+
+| xxxx   |    34 |
+| tttt   |    54 |
+| deepak |   133 |
+| gs     |    33 |
+| ht     |   114 |
+| tiwari |    94 |
++--------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select name,marks from student where rno < some(select rno from course where course.rno=student.rno);
+Empty set (0.00 sec)
+
+mysql> select name,marks from student where rno = any(select rno from course where course.rno=student.rno);
++--------+-------+
+| name   | marks |
++--------+-------+
+| xxxx   |    34 |
+| tttt   |    54 |
+| deepak |   133 |
+| gs     |    33 |
+| ht     |   114 |
+| tiwari |    94 |
++--------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select name,marks from student where rno<= any(select rno from course where course.rno=student.rno);
++--------+-------+
+| name   | marks |
++--------+-------+
+| xxxx   |    34 |
+| tttt   |    54 |
+| deepak |   133 |
+| gs     |    33 |
+| ht     |   114 |
+| tiwari |    94 |
++--------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select name,marks from student where rno < any(select rno from course where course.rno=student.rno);
+Empty set (0.00 sec)
+
+mysql> 

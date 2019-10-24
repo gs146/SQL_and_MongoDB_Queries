@@ -1,0 +1,901 @@
+(base) abhishek@abhishek-Lenovo-ideapad-310-15IKB:~$ sudo service mongod start;
+[sudo] password for abhishek: 
+(base) abhishek@abhishek-Lenovo-ideapad-310-15IKB:~$ mongo
+MongoDB shell version v4.2.0
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("d6fb8ded-226f-4f22-a1de-8129a6f365bc") }
+MongoDB server version: 4.2.0
+Server has startup warnings: 
+2019-10-23T09:27:59.613+0530 I  STORAGE  [initandlisten] 
+2019-10-23T09:27:59.613+0530 I  STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2019-10-23T09:27:59.613+0530 I  STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2019-10-23T09:28:05.554+0530 I  CONTROL  [initandlisten] 
+2019-10-23T09:28:05.554+0530 I  CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2019-10-23T09:28:05.554+0530 I  CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2019-10-23T09:28:05.554+0530 I  CONTROL  [initandlisten] 
+---
+Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+and anyone you share the URL with. MongoDB may use this information to make product
+improvements and to suggest MongoDB products and deployment options to you.
+
+To enable free monitoring, run the following command: db.enableFreeMonitoring()
+To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+
+> show dbs;
+abhishek  0.000GB
+admin     0.000GB
+config    0.000GB
+local     0.000GB
+> create practice;
+2019-10-23T09:41:35.581+0530 E  QUERY    [js] uncaught exception: SyntaxError: unexpected token: identifier :
+@(shell):1:7
+> create practice
+2019-10-23T09:41:48.517+0530 E  QUERY    [js] uncaught exception: SyntaxError: unexpected token: identifier :
+@(shell):1:7
+> use practice;
+switched to db practice
+> delete practice;
+true
+> use practice;
+switched to db practice
+> db.practice.insert(first_name = "abhi", last_name = "Singh", salary = 5000);
+2019-10-23T09:45:03.925+0530 E  QUERY    [js] Error: argument to bsonsize has to be an object :
+addToOperationsList@src/mongo/shell/bulk_api.js:607:28
+Bulk/this.insert@src/mongo/shell/bulk_api.js:650:20
+DBCollection.prototype.insert@src/mongo/shell/collection.js:313:13
+@(shell):1:1
+> db.practice.insert({first_name: "abhi", last_name : "Singh", salary : 5000});
+WriteResult({ "nInserted" : 1 })
+> use abhishek;
+switched to db abhishek
+> show databases;
+abhishek  0.000GB
+admin     0.000GB
+config    0.000GB
+local     0.000GB
+practice  0.000GB
+> delete practice;
+true
+> show dbs;
+abhishek  0.000GB
+admin     0.000GB
+config    0.000GB
+local     0.000GB
+practice  0.000GB
+> show collections;
+employee
+> db.employee.find().pretty();
+{
+	"_id" : ObjectId("5dac3d33ca3a17386384155f"),
+	"first_name" : "John",
+	"last_name" : "Singh",
+	"salary" : 2000,
+	"company" : 1
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841561"),
+	"first_name" : "Rahul",
+	"last_name" : "bhardwaj",
+	"gender" : "male",
+	"salary" : 3500,
+	"company" : 2
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841562"),
+	"first_name" : "Sachin",
+	"last_name" : "tendulkar",
+	"salary" : 4500,
+	"company" : 1
+}
+{
+	"_id" : ObjectId("5dac50aaca3a173863841563"),
+	"first_name" : "Babu",
+	"last_name" : "Bhaiya",
+	"salary" : 5500,
+	"company" : 2
+}
+> db.employee.find({company: 2}).pretty();
+{
+	"_id" : ObjectId("5dac432dca3a173863841561"),
+	"first_name" : "Rahul",
+	"last_name" : "bhardwaj",
+	"gender" : "male",
+	"salary" : 3500,
+	"company" : 2
+}
+{
+	"_id" : ObjectId("5dac50aaca3a173863841563"),
+	"first_name" : "Babu",
+	"last_name" : "Bhaiya",
+	"salary" : 5500,
+	"company" : 2
+}
+> db.emplpyee.findOne({company: 2}).pretty();
+2019-10-23T09:50:33.102+0530 E  QUERY    [js] uncaught exception: TypeError: db.emplpyee.findOne(...) is null :
+@(shell):1:1
+> db.employee.findOne({company: 2}).pretty();
+2019-10-23T09:50:58.791+0530 E  QUERY    [js] uncaught exception: TypeError: db.employee.findOne(...).pretty is not a function :
+@(shell):1:1
+> db.employee.findOne({company: 2});
+{
+	"_id" : ObjectId("5dac432dca3a173863841561"),
+	"first_name" : "Rahul",
+	"last_name" : "bhardwaj",
+	"gender" : "male",
+	"salary" : 3500,
+	"company" : 2
+}
+> db.employee.find({$or:[{salary : {$gt: 3000}}, {salary: {$lt: 6000}}] });
+{ "_id" : ObjectId("5dac3d33ca3a17386384155f"), "first_name" : "John", "last_name" : "Singh", "salary" : 2000, "company" : 1 }
+{ "_id" : ObjectId("5dac432dca3a173863841561"), "first_name" : "Rahul", "last_name" : "bhardwaj", "gender" : "male", "salary" : 3500, "company" : 2 }
+{ "_id" : ObjectId("5dac432dca3a173863841562"), "first_name" : "Sachin", "last_name" : "tendulkar", "salary" : 4500, "company" : 1 }
+{ "_id" : ObjectId("5dac50aaca3a173863841563"), "first_name" : "Babu", "last_name" : "Bhaiya", "salary" : 5500, "company" : 2 }
+> db.employee.find({$or:[{salary : {$gt: 3000}}, {salary: {$lt: 6000}}] }).pretty();
+{
+	"_id" : ObjectId("5dac3d33ca3a17386384155f"),
+	"first_name" : "John",
+	"last_name" : "Singh",
+	"salary" : 2000,
+	"company" : 1
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841561"),
+	"first_name" : "Rahul",
+	"last_name" : "bhardwaj",
+	"gender" : "male",
+	"salary" : 3500,
+	"company" : 2
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841562"),
+	"first_name" : "Sachin",
+	"last_name" : "tendulkar",
+	"salary" : 4500,
+	"company" : 1
+}
+{
+	"_id" : ObjectId("5dac50aaca3a173863841563"),
+	"first_name" : "Babu",
+	"last_name" : "Bhaiya",
+	"salary" : 5500,
+	"company" : 2
+}
+> db.employee.find({$and:[{salary : {$gt: 3000}}, {salary: {$lt: 6000}}] }).pretty();
+{
+	"_id" : ObjectId("5dac432dca3a173863841561"),
+	"first_name" : "Rahul",
+	"last_name" : "bhardwaj",
+	"gender" : "male",
+	"salary" : 3500,
+	"company" : 2
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841562"),
+	"first_name" : "Sachin",
+	"last_name" : "tendulkar",
+	"salary" : 4500,
+	"company" : 1
+}
+{
+	"_id" : ObjectId("5dac50aaca3a173863841563"),
+	"first_name" : "Babu",
+	"last_name" : "Bhaiya",
+	"salary" : 5500,
+	"company" : 2
+}
+
+> db.employee.find({salary: {$not: {$gt: 5000}}});
+{ "_id" : ObjectId("5dac3d33ca3a17386384155f"), "first_name" : "John", "last_name" : "Singh", "salary" : 2000, "company" : 1 }
+{ "_id" : ObjectId("5dac432dca3a173863841561"), "first_name" : "Rahul", "last_name" : "bhardwaj", "gender" : "male", "salary" : 3500, "company" : 2 }
+{ "_id" : ObjectId("5dac432dca3a173863841562"), "first_name" : "Sachin", "last_name" : "tendulkar", "salary" : 4500, "company" : 1 }
+> db.employee.find({salary: {$not: {$gt: 5000}}}).pretty();
+{
+	"_id" : ObjectId("5dac3d33ca3a17386384155f"),
+	"first_name" : "John",
+	"last_name" : "Singh",
+	"salary" : 2000,
+	"company" : 1
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841561"),
+	"first_name" : "Rahul",
+	"last_name" : "bhardwaj",
+	"gender" : "male",
+	"salary" : 3500,
+	"company" : 2
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841562"),
+	"first_name" : "Sachin",
+	"last_name" : "tendulkar",
+	"salary" : 4500,
+	"company" : 1
+}
+> db.employee.find().pretty();
+{
+	"_id" : ObjectId("5dac3d33ca3a17386384155f"),
+	"first_name" : "John",
+	"last_name" : "Singh",
+	"salary" : 2000,
+	"company" : 1
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841561"),
+	"first_name" : "Rahul",
+	"last_name" : "bhardwaj",
+	"gender" : "male",
+	"salary" : 3500,
+	"company" : 2
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841562"),
+	"first_name" : "Sachin",
+	"last_name" : "tendulkar",
+	"salary" : 4500,
+	"company" : 1
+}
+{
+	"_id" : ObjectId("5dac50aaca3a173863841563"),
+	"first_name" : "Babu",
+	"last_name" : "Bhaiya",
+	"salary" : 5500,
+	"company" : 2
+}
+> db.employee.update({first_name: "John"}, {$set: {salary : {salary + 5000}}});
+2019-10-23T10:13:49.852+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing : after property id :
+@(shell):1:66
+> db.employee.update({first_name: "John"}, {$set: {salary : {$salary + 5000}}});
+2019-10-23T10:14:10.016+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing : after property id :
+@(shell):1:67
+> db.employee.update({first_name: "John"}, {$inc: {salary : 500}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.employee.find().pretty();
+{
+	"_id" : ObjectId("5dac3d33ca3a17386384155f"),
+	"first_name" : "John",
+	"last_name" : "Singh",
+	"salary" : 2500,
+	"company" : 1
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841561"),
+	"first_name" : "Rahul",
+	"last_name" : "bhardwaj",
+	"gender" : "male",
+	"salary" : 3500,
+	"company" : 2
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841562"),
+	"first_name" : "Sachin",
+	"last_name" : "tendulkar",
+	"salary" : 4500,
+	"company" : 1
+}
+{
+	"_id" : ObjectId("5dac50aaca3a173863841563"),
+	"first_name" : "Babu",
+	"last_name" : "Bhaiya",
+	"salary" : 5500,
+	"company" : 2
+}
+> db.employee.updateMany({company: 2}, {$inc: {salary: 500}});
+{ "acknowledged" : true, "matchedCount" : 2, "modifiedCount" : 2 }
+> db.employee.find().pretty();
+{
+	"_id" : ObjectId("5dac3d33ca3a17386384155f"),
+	"first_name" : "John",
+	"last_name" : "Singh",
+	"salary" : 2500,
+	"company" : 1
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841561"),
+	"first_name" : "Rahul",
+	"last_name" : "bhardwaj",
+	"gender" : "male",
+	"salary" : 4000,
+	"company" : 2
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841562"),
+	"first_name" : "Sachin",
+	"last_name" : "tendulkar",
+	"salary" : 4500,
+	"company" : 1
+}
+{
+	"_id" : ObjectId("5dac50aaca3a173863841563"),
+	"first_name" : "Babu",
+	"last_name" : "Bhaiya",
+	"salary" : 6000,
+	"company" : 2
+}
+> db.employee.insert({first_name: "Tiger", salary: 4567});
+WriteResult({ "nInserted" : 1 })
+> db.employee.delete({first_name: "Tiger"});
+2019-10-23T10:30:23.453+0530 E  QUERY    [js] uncaught exception: TypeError: db.employee.delete is not a function :
+@(shell):1:1
+> db.employee.remove({first_name: "Tiger"});
+WriteResult({ "nRemoved" : 1 })
+> db.employee.update({first_name: "John"}, {$min: {salary: 2000}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.employee.find().pretty();
+{
+	"_id" : ObjectId("5dac3d33ca3a17386384155f"),
+	"first_name" : "John",
+	"last_name" : "Singh",
+	"salary" : 2000,
+	"company" : 1
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841561"),
+	"first_name" : "Rahul",
+	"last_name" : "bhardwaj",
+	"gender" : "male",
+	"salary" : 4000,
+	"company" : 2
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841562"),
+	"first_name" : "Sachin",
+	"last_name" : "tendulkar",
+	"salary" : 4500,
+	"company" : 1
+}
+{
+	"_id" : ObjectId("5dac50aaca3a173863841563"),
+	"first_name" : "Babu",
+	"last_name" : "Bhaiya",
+	"salary" : 6000,
+	"company" : 2
+}
+> db.employee.find({first_name: {$regexp: {"John"}}});
+2019-10-23T10:50:16.869+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing : after property id :
+@(shell):1:47
+> db.employee.find({first_name: {$regexp: "John"}});
+Error: error: {
+	"ok" : 0,
+	"errmsg" : "unknown operator: $regexp",
+	"code" : 2,
+	"codeName" : "BadValue"
+}
+> db.employee.find({first_name: {$regex: "John"}});
+{ "_id" : ObjectId("5dac3d33ca3a17386384155f"), "first_name" : "John", "last_name" : "Singh", "salary" : 2000, "company" : 1 }
+> db.employee.find({first_name: {$regex: "Joh"}});
+{ "_id" : ObjectId("5dac3d33ca3a17386384155f"), "first_name" : "John", "last_name" : "Singh", "salary" : 2000, "company" : 1 }
+> db.employee.find({first_name: {$regex: "joh"}});
+> db.employee.find({first_name: {$regex: "joh", options: "$i"}});
+Error: error: {
+	"ok" : 0,
+	"errmsg" : "unknown operator: options",
+	"code" : 2,
+	"codeName" : "BadValue"
+}
+> db.employee.find({first_name: {$regex: "joh", option: "$i"}});
+Error: error: {
+	"ok" : 0,
+	"errmsg" : "unknown operator: option",
+	"code" : 2,
+	"codeName" : "BadValue"
+}
+> db.employee.find({first_name: {$regex: "ohn"}});
+{ "_id" : ObjectId("5dac3d33ca3a17386384155f"), "first_name" : "John", "last_name" : "Singh", "salary" : 2000, "company" : 1 }
+> db.employee.find({first_name: {$regex: "n"}});
+{ "_id" : ObjectId("5dac3d33ca3a17386384155f"), "first_name" : "John", "last_name" : "Singh", "salary" : 2000, "company" : 1 }
+{ "_id" : ObjectId("5dac432dca3a173863841562"), "first_name" : "Sachin", "last_name" : "tendulkar", "salary" : 4500, "company" : 1 }
+> db.employee.update({first_name: John}, {$set: {tags: ["red", "blue"]}});
+2019-10-23T11:24:56.373+0530 E  QUERY    [js] uncaught exception: ReferenceError: John is not defined :
+@(shell):1:21
+> db.employee.update({first_name: "John"}, {$set: {tags: ["red", "blue"]}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.employee.update({first_name: "Sachin"}, {$set: {tags: ["red", "yellow"]}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.employee.find({"$tags.1": "red" });
+Error: error: {
+	"ok" : 0,
+	"errmsg" : "unknown top level operator: $tags.1",
+	"code" : 2,
+	"codeName" : "BadValue"
+}
+> db.employee.find({"tags.1": "red" });
+> db.employee.find({"tags.0": "red" });
+{ "_id" : ObjectId("5dac3d33ca3a17386384155f"), "first_name" : "John", "last_name" : "Singh", "salary" : 2000, "company" : 1, "tags" : [ "red", "blue" ] }
+{ "_id" : ObjectId("5dac432dca3a173863841562"), "first_name" : "Sachin", "last_name" : "tendulkar", "salary" : 4500, "company" : 1, "tags" : [ "red", "yellow" ] }
+> db.employee.find({"tags.1": {$or: {"blue", "yellow"}} });
+2019-10-23T11:29:24.228+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing : after property id :
+@(shell):1:41
+> db.employee.find({"tags.1": {$or: [{"blue"}, {"yellow"}]} });
+2019-10-23T11:42:31.987+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing : after property id :
+@(shell):1:42
+> db.employee.find({$or: [{tags.1: "blue"}, {tags.1: "yellow"}]});
+2019-10-23T11:47:34.339+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing : after property id :
+@(shell):1:29
+> db.employee.find({$or: [{"tags.1": "blue"}, {"tags.1": "yellow"}]});
+{ "_id" : ObjectId("5dac3d33ca3a17386384155f"), "first_name" : "John", "last_name" : "Singh", "salary" : 2000, "company" : 1, "tags" : [ "red", "blue" ] }
+{ "_id" : ObjectId("5dac432dca3a173863841562"), "first_name" : "Sachin", "last_name" : "tendulkar", "salary" : 4500, "company" : 1, "tags" : [ "red", "yellow" ] }
+> db.employee.find().limit(2);
+{ "_id" : ObjectId("5dac3d33ca3a17386384155f"), "first_name" : "John", "last_name" : "Singh", "salary" : 2000, "company" : 1, "tags" : [ "red", "blue" ] }
+{ "_id" : ObjectId("5dac432dca3a173863841561"), "first_name" : "Rahul", "last_name" : "bhardwaj", "gender" : "male", "salary" : 4000, "company" : 2 }
+> db.employee.find().skip(2);
+{ "_id" : ObjectId("5dac432dca3a173863841562"), "first_name" : "Sachin", "last_name" : "tendulkar", "salary" : 4500, "company" : 1, "tags" : [ "red", "yellow" ] }
+{ "_id" : ObjectId("5dac50aaca3a173863841563"), "first_name" : "Babu", "last_name" : "Bhaiya", "salary" : 6000, "company" : 2 }
+> db.employee.find().sort({salary: -1});
+{ "_id" : ObjectId("5dac50aaca3a173863841563"), "first_name" : "Babu", "last_name" : "Bhaiya", "salary" : 6000, "company" : 2 }
+{ "_id" : ObjectId("5dac432dca3a173863841562"), "first_name" : "Sachin", "last_name" : "tendulkar", "salary" : 4500, "company" : 1, "tags" : [ "red", "yellow" ] }
+{ "_id" : ObjectId("5dac432dca3a173863841561"), "first_name" : "Rahul", "last_name" : "bhardwaj", "gender" : "male", "salary" : 4000, "company" : 2 }
+{ "_id" : ObjectId("5dac3d33ca3a17386384155f"), "first_name" : "John", "last_name" : "Singh", "salary" : 2000, "company" : 1, "tags" : [ "red", "blue" ] }
+> db.employee.find({$where: function() { return (this.salary > 2000)} });
+{ "_id" : ObjectId("5dac432dca3a173863841561"), "first_name" : "Rahul", "last_name" : "bhardwaj", "gender" : "male", "salary" : 4000, "company" : 2 }
+{ "_id" : ObjectId("5dac432dca3a173863841562"), "first_name" : "Sachin", "last_name" : "tendulkar", "salary" : 4500, "company" : 1, "tags" : [ "red", "yellow" ] }
+{ "_id" : ObjectId("5dac50aaca3a173863841563"), "first_name" : "Babu", "last_name" : "Bhaiya", "salary" : 6000, "company" : 2 }
+> db.runCommand({find: "employee", projection: {first_name: 1, salary: 1}, sort: {salary: -1}});
+{
+	"cursor" : {
+		"firstBatch" : [
+			{
+				"_id" : ObjectId("5dac50aaca3a173863841563"),
+				"first_name" : "Babu",
+				"salary" : 6000
+			},
+			{
+				"_id" : ObjectId("5dac432dca3a173863841562"),
+				"first_name" : "Sachin",
+				"salary" : 4500
+			},
+			{
+				"_id" : ObjectId("5dac432dca3a173863841561"),
+				"first_name" : "Rahul",
+				"salary" : 4000
+			},
+			{
+				"_id" : ObjectId("5dac3d33ca3a17386384155f"),
+				"first_name" : "John",
+				"salary" : 2000
+			}
+		],
+		"id" : NumberLong(0),
+		"ns" : "abhishek.employee"
+	},
+	"ok" : 1
+}
+> db.runCommand({find: "employee", projection: {first_name, salary}, sort : {salary: -1}, limit: 3, filter: {salary: {$gte: 4300}}});
+{
+	"cursor" : {
+		"firstBatch" : [
+			{
+				"_id" : ObjectId("5dac50aaca3a173863841563"),
+				"first_name" : "Babu",
+				"salary" : 6000
+			},
+			{
+				"_id" : ObjectId("5dac432dca3a173863841562"),
+				"first_name" : "Sachin",
+				"salary" : 4500
+			}
+		],
+		"id" : NumberLong(0),
+		"ns" : "abhishek.employee"
+	},
+	"ok" : 1
+}
+> db.employee.aggregate()
+{ "_id" : ObjectId("5dac3d33ca3a17386384155f"), "first_name" : "John", "last_name" : "Singh", "salary" : 2000, "company" : 1, "tags" : [ "red", "blue" ] }
+{ "_id" : ObjectId("5dac432dca3a173863841561"), "first_name" : "Rahul", "last_name" : "bhardwaj", "gender" : "male", "salary" : 4000, "company" : 2 }
+{ "_id" : ObjectId("5dac432dca3a173863841562"), "first_name" : "Sachin", "last_name" : "tendulkar", "salary" : 4500, "company" : 1, "tags" : [ "red", "yellow" ] }
+{ "_id" : ObjectId("5dac50aaca3a173863841563"), "first_name" : "Babu", "last_name" : "Bhaiya", "salary" : 6000, "company" : 2 }
+> {
+... {
+... $group:
+... {
+... _id: "company",
+... totalsal: {$add: salary};
+... }
+... }
+... }
+2019-10-23T12:29:43.774+0530 E  QUERY    [js] uncaught exception: SyntaxError: unexpected token: ':' :
+@(shell):6:8
+> db.employee.aggregate(
+... {
+... {
+... $group:
+... {
+... _id: "company",
+... totalsal: {$add: salary};
+... }
+... }
+... }
+... )
+2019-10-23T12:30:44.772+0530 E  QUERY    [js] uncaught exception: SyntaxError: expected property name, got '{' :
+@(shell):3:0
+> db.employee.aggregate(
+... {
+... 
+... $group:
+... {
+... _id: "company",
+... totalsal: {$add: salary};
+... }
+... 
+... }
+... )
+2019-10-23T12:31:02.363+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing } after property list :
+@(shell):7:24
+> db.employee.aggregate(
+... {
+... 
+... $group:
+... {
+... _id: "company",
+... totalsal: {$sum: "$salary"};
+... }
+... 
+... }
+... )
+2019-10-23T12:38:17.058+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing } after property list :
+@(shell):7:27
+> db.employee.aggregate(
+... {
+... 
+... $group:
+... {
+... _id: "$company",
+... totalsal: {$sum: "$salary"}
+... }
+... 
+... }
+... )
+{ "_id" : 1, "totalsal" : 6500 }
+{ "_id" : 2, "totalsal" : 10000 }
+> db.employee.aggregate( {  $group: { _id: "company", totalsal: {$sum: "$salary"} }  } )
+{ "_id" : "company", "totalsal" : 16500 }
+> db.employee.aggregate( {  $group: { _id: "$company", totalsal: {$sum: "$salary"} }  } )
+{ "_id" : 1, "totalsal" : 6500 }
+{ "_id" : 2, "totalsal" : 10000 }
+> db.employee.aggregate(
+... {
+... 
+... $group:
+... {
+... _id: "$company",
+... totalsal: {$sum: "$salary"}
+... }
+... 
+... },
+... {
+... $match: {totalsal: {$gt: 6500}}
+... }
+... )
+{ "_id" : 2, "totalsal" : 10000 }
+> db.employee.getIndexes();
+[
+	{
+		"v" : 2,
+		"key" : {
+			"_id" : 1
+		},
+		"name" : "_id_",
+		"ns" : "abhishek.employee"
+	}
+]
+> var sum = 0;
+> db.employee.find().forEach(function(var){ sum = sum + var.salary});
+2019-10-23T16:51:37.752+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing formal parameter :
+@(shell):1:36
+> db.employee.find().forEach(function(var){ sum = sum + var.salary;});
+2019-10-23T16:52:30.838+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing formal parameter :
+@(shell):1:36
+> db.employee.find().forEach(function(var){ sum += var.salary;})
+2019-10-23T16:57:35.006+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing formal parameter :
+@(shell):1:36
+> print(sum);
+0
+> db.employee.find().forEach(function(var){ print(var.salary);});
+2019-10-23T16:58:53.694+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing formal parameter :
+@(shell):1:36
+> db.employee.find().forEach(function(val){ print(val.salary);});
+2000
+4000
+4500
+6000
+> db.employee.find().forEach(function(val){ sum += val.salary;})
+> print(sum);
+16500
+> db.employee.mapreduce(
+... function()
+... {
+... emit (this.company, this.salary);
+... },
+... function(key, value)
+... {
+... return Array.sum(value);
+... }
+... )
+2019-10-23T17:43:48.990+0530 E  QUERY    [js] uncaught exception: TypeError: db.employee.mapreduce is not a function :
+@(shell):1:1
+> db.employee.mapReduce(
+... function()
+... {
+... emit (this.company, this.salary);
+... },
+... function(key, value)
+... {
+... return Array.sum(value);
+... }
+... )
+2019-10-23T17:44:18.391+0530 E  QUERY    [js] uncaught exception: Error: assert failed : need to supply an optionsOrOutString :
+doassert@src/mongo/shell/assert.js:20:14
+assert@src/mongo/shell/assert.js:151:9
+DBCollection.prototype.mapReduce@src/mongo/shell/collection.js:1066:5
+@(shell):1:1
+> db.employee.mapReduce(
+... function()
+... {
+... emit (this.company, this.salary);
+... },
+... function(key, value)
+... {
+... return Array.sum(value)
+... },
+... {
+... out: "total_sal"
+... }
+... )
+{
+	"result" : "total_sal",
+	"timeMillis" : 1864,
+	"counts" : {
+		"input" : 4,
+		"emit" : 4,
+		"reduce" : 2,
+		"output" : 2
+	},
+	"ok" : 1
+}
+> db.employee.find().pretty();
+{
+	"_id" : ObjectId("5dac3d33ca3a17386384155f"),
+	"first_name" : "John",
+	"last_name" : "Singh",
+	"salary" : 2000,
+	"company" : 1,
+	"tags" : [
+		"red",
+		"blue"
+	]
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841561"),
+	"first_name" : "Rahul",
+	"last_name" : "bhardwaj",
+	"gender" : "male",
+	"salary" : 4000,
+	"company" : 2
+}
+{
+	"_id" : ObjectId("5dac432dca3a173863841562"),
+	"first_name" : "Sachin",
+	"last_name" : "tendulkar",
+	"salary" : 4500,
+	"company" : 1,
+	"tags" : [
+		"red",
+		"yellow"
+	]
+}
+{
+	"_id" : ObjectId("5dac50aaca3a173863841563"),
+	"first_name" : "Babu",
+	"last_name" : "Bhaiya",
+	"salary" : 6000,
+	"company" : 2
+}
+> db.employee.mapReduce(
+... function()
+... {
+... emit (this.company, this.salary);
+... },
+... function(key, value)
+... {
+... return Array.sum(value)
+... },
+... {
+... out: "total_sal"
+... }
+... ).find();
+{ "_id" : 1, "value" : 6500 }
+{ "_id" : 2, "value" : 10000 }
+> db.employee.mapReduce(
+... function()
+... {
+... emit (this.company, this.salary);
+... },
+... function(key, value)
+... {
+... return Array.sum(value);
+... },
+... {
+... out: "total_sal";
+... }
+... ).find()
+2019-10-23T17:49:29.518+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing } after property list :
+@(shell):11:16
+> db.employee.mapReduce( function() { emit (this.company, this.salary); }, function(key, value) { return Array.sum(value); }, { out: "total_sal"; } ).find();
+2019-10-23T17:49:42.662+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing } after property list :
+@(shell):1:142
+> db.employee.mapReduce( function() { emit (this.company, this.salary); }, function(key, value) { return Array.sum(value); }, { out: "total_sal" } ).find();
+{ "_id" : 1, "value" : 6500 }
+{ "_id" : 2, "value" : 10000 }
+> db.employee.mapReduce(
+... function()
+... {
+... emit(this.company, this.salary);
+... },
+... function(key, value)
+... {
+... return Array.sum(value);
+... },
+... {
+... query: {salary > 2000},
+... out: "Total_sal"
+... }
+... ).find();
+2019-10-23T17:59:11.358+0530 E  QUERY    [js] uncaught exception: SyntaxError: missing : after property id :
+@(shell):11:15
+> db.employee.mapReduce(
+... function()
+... {
+... emit(this.company, this.salary);
+... },
+... function(key, value)
+... {
+... return Array.sum(value);
+... },
+... {
+... query: {salary: {$gt: 2000}},
+... out: "Total_sal"
+... }
+... ).find();
+{ "_id" : 1, "value" : 4500 }
+{ "_id" : 2, "value" : 10000 }
+> db.employee.aggregate({$sum:"$salary"});
+2019-10-23T18:05:23.540+0530 E  QUERY    [js] uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "Unrecognized pipeline stage name: '$sum'",
+	"code" : 40324,
+	"codeName" : "Location40324"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:583:17
+assert.commandWorked@src/mongo/shell/assert.js:673:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1012:12
+@(shell):1:1
+> db.employee.aggregate({$group:{$sum:"$salary"}});
+2019-10-23T18:05:52.029+0530 E  QUERY    [js] uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "The field '$sum' must be an accumulator object",
+	"code" : 40234,
+	"codeName" : "Location40234"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:583:17
+assert.commandWorked@src/mongo/shell/assert.js:673:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1012:12
+@(shell):1:1
+> var sum = 0;
+> db.employee.find().forEach(function(val) { sum += val.salary;});
+> print(sum);
+16500
+> db.employee.aggregate({$group:{total:{$sum:"$salary"}}});
+2019-10-23T18:07:36.303+0530 E  QUERY    [js] uncaught exception: Error: command failed: {
+	"ok" : 0,
+	"errmsg" : "a group specification must include an _id",
+	"code" : 15955,
+	"codeName" : "Location15955"
+} : aggregate failed :
+_getErrorWithCode@src/mongo/shell/utils.js:25:13
+doassert@src/mongo/shell/assert.js:18:14
+_assertCommandWorked@src/mongo/shell/assert.js:583:17
+assert.commandWorked@src/mongo/shell/assert.js:673:16
+DB.prototype._runAggregate@src/mongo/shell/db.js:266:5
+DBCollection.prototype.aggregate@src/mongo/shell/collection.js:1012:12
+@(shell):1:1
+> db.employee.aggregate({$group:{_id:"$company",total:{$sum:"$salary"}}});
+{ "_id" : 1, "total" : 6500 }
+{ "_id" : 2, "total" : 10000 }
+> db.employee.aggregate({$group:{_id:null,total:{$sum:"$salary"}}});
+{ "_id" : null, "total" : 16500 }
+> 
+> db.employee.createIndex({})
+{
+	"ok" : 0,
+	"errmsg" : "Index keys cannot be empty.",
+	"code" : 67,
+	"codeName" : "CannotCreateIndex"
+}
+> db.employee.find()
+{ "_id" : ObjectId("5dac3d33ca3a17386384155f"), "first_name" : "John", "last_name" : "Singh", "salary" : 2000, "company" : 1, "tags" : [ "red", "blue" ] }
+{ "_id" : ObjectId("5dac432dca3a173863841561"), "first_name" : "Rahul", "last_name" : "bhardwaj", "gender" : "male", "salary" : 4000, "company" : 2 }
+{ "_id" : ObjectId("5dac432dca3a173863841562"), "first_name" : "Sachin", "last_name" : "tendulkar", "salary" : 4500, "company" : 1, "tags" : [ "red", "yellow" ] }
+{ "_id" : ObjectId("5dac50aaca3a173863841563"), "first_name" : "Babu", "last_name" : "Bhaiya", "salary" : 6000, "company" : 2 }
+> db.employee.createIndex({first_name:1})
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 1,
+	"numIndexesAfter" : 2,
+	"ok" : 1
+}
+> db.employee.getIndexes()
+[
+	{
+		"v" : 2,
+		"key" : {
+			"_id" : 1
+		},
+		"name" : "_id_",
+		"ns" : "abhishek.employee"
+	},
+	{
+		"v" : 2,
+		"key" : {
+			"first_name" : 1
+		},
+		"name" : "first_name_1",
+		"ns" : "abhishek.employee"
+	}
+]
+> db.employee.dropIndex()
+2019-10-23T18:40:44.815+0530 E  QUERY    [js] uncaught exception: Error: assert failed : need to specify index to dropIndex :
+doassert@src/mongo/shell/assert.js:20:14
+assert@src/mongo/shell/assert.js:151:9
+DBCollection.prototype.dropIndex@src/mongo/shell/collection.js:859:5
+@(shell):1:1
+> db.employee.dropIndex({first_name:1})
+{ "nIndexesWas" : 2, "ok" : 1 }
+> db.employee.getIndexes()
+[
+	{
+		"v" : 2,
+		"key" : {
+			"_id" : 1
+		},
+		"name" : "_id_",
+		"ns" : "abhishek.employee"
+	}
+]
+> db.employee.createIndex({first_name:1, last_name:1})
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 1,
+	"numIndexesAfter" : 2,
+	"ok" : 1
+}
+> db.employee.getIndexes()
+[
+	{
+		"v" : 2,
+		"key" : {
+			"_id" : 1
+		},
+		"name" : "_id_",
+		"ns" : "abhishek.employee"
+	},
+	{
+		"v" : 2,
+		"key" : {
+			"first_name" : 1,
+			"last_name" : 1
+		},
+		"name" : "first_name_1_last_name_1",
+		"ns" : "abhishek.employee"
+	}
+]
+

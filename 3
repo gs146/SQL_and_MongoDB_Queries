@@ -1,0 +1,237 @@
+
+
+
+mysql> use gaurav;
+Database changed
+mysql> create table employee(
+    -> eid int,
+    -> ename varchar(20),
+    -> address varchar(30),
+    -> DOB date,
+    -> DOJ date,
+    -> salary int,
+    -> Pid int
+    -> );
+Query OK, 0 rows affected (0.30 sec)
+
+mysql> create table department
+    ->  (DID int,
+    ->  DName int
+    ->  );
+Query OK, 0 rows affected (0.32 sec)
+
+mysql> create table project (PID int, PName int,Lid int );
+Query OK, 0 rows affected (0.30 sec)
+
+mysql> create table Location (Lid int, LName int);
+Query OK, 0 rows affected (0.30 sec)
+
+mysql> show tables;
++-----------------+
+| Tables_in_gaurav |
++-----------------+
+| Location        |
+| department      |
+| employee        |
+| project         |
++-----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into employee values
+    -> (4347,"abc","abc-411015,pune","1996-12-12","2017-11-12",10000,1);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into employee values
+    -> (4348,"bcd","bcd-411015,pune","1996-10-09","2017-11-12",10000,2);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into employee values
+    -> (4349,"cde","cde-411015,pune","1995-10-09","2011-10-12",10000,3);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into employee values
+    -> (4350,"cde","cde-411015,pune","1997-10-04","2017-12-12",10000,4);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into employee values
+    -> (4305,"def","def-411015,pune","1992-11-04","2017-12-12",10000,5);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from employee;
++------+-------+-----------------+------------+------------+--------+------+
+| eid  | ename | address         | DOB        | DOJ        | salary | Pid  |
++------+-------+-----------------+------------+------------+--------+------+
+| 4347 | abc   | abc-411015,pune | 1996-12-12 | 2017-11-12 |  10000 |    1 |
+| 4348 | bcd   | bcd-411015,pune | 1996-10-09 | 2017-11-12 |  10000 |    2 |
+| 4349 | cde   | cde-411015,pune | 1995-10-09 | 2011-10-12 |  10000 |    3 |
+| 4350 | cde   | cde-411015,pune | 1997-10-04 | 2017-12-12 |  10000 |    4 |
+| 4305 | def   | def-411015,pune | 1992-11-04 | 2017-12-12 |  10000 |    5 |
++------+-------+-----------------+------------+------------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> drop table department;
+Query OK, 0 rows affected (0.21 sec)
+
+mysql>  create table department(
+    -> DID int,
+    ->  DName varchar(20)
+    ->  );
+Query OK, 0 rows affected (0.26 sec)
+
+mysql> show tables;
++-----------------+
+| Tables_in_gaurav |
++-----------------+
+| Location        |
+| department      |
+| employee        |
+| project         |
++-----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into department values(1,"IT");
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into department values(2,"COMP");
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into department values(3,"E&TC");
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into department values(4,"MECH");
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into department values(5,"CIVIL");
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from department;
++------+-------+
+| DID  | DName |
++------+-------+
+|    1 | IT    |
+|    2 | COMP  |
+|    3 | E&TC  |
+|    4 | MECH  |
+|    5 | CIVIL |
++------+-------+
+5 rows in set (0.00 sec)
+
+mysql> drop table project;
+Query OK, 0 rows affected (0.25 sec)
+
+mysql> drop table Location;
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> create table project(
+    -> PID int,
+    -> PName varchar(20),
+    -> LID int);
+Query OK, 0 rows affected (0.33 sec)
+
+mysql> create table location(LID int,LName varchar(20));
+Query OK, 0 rows affected (0.33 sec)
+
+mysql> select * from employee;
++------+-------+-----------------+------------+------------+--------+------+
+| eid  | ename | address         | DOB        | DOJ        | salary | Pid  |
++------+-------+-----------------+------------+------------+--------+------+
+| 4347 | abc   | abc-411015,pune | 1996-12-12 | 2017-11-12 |  10000 |    1 |
+| 4348 | bcd   | bcd-411015,pune | 1996-10-09 | 2017-11-12 |  10000 |    2 |
+| 4349 | cde   | cde-411015,pune | 1995-10-09 | 2011-10-12 |  10000 |    3 |
+| 4350 | cde   | cde-411015,pune | 1997-10-04 | 2017-12-12 |  10000 |    4 |
+| 4305 | def   | def-411015,pune | 1992-11-04 | 2017-12-12 |  10000 |    5 |
++------+-------+-----------------+------------+------------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> insert into project values(11,"web-develop",111);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into project values(22,"app-develop",222);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into project values(33,"database-manag.",333);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into project values(44,"full-stack",444);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into project values(55,"game",555);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from project;
++------+-----------------+------+
+| PID  | PName           | LID  |
++------+-----------------+------+
+|   11 | web-develop     |  111 |
+|   22 | app-develop     |  222 |
+|   33 | database-manag. |  333 |
+|   44 | full-stack      |  444 |
+|   55 | game            |  555 |
++------+-----------------+------+
+5 rows in set (0.00 sec)
+
+mysql> insert into location values(111,"pune");
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into location values(222,"pune");
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into location values(333,"mumbai");
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into location values(444,"mumbai");
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into location values(555,"nashik");
+Query OK, 1 row affected (0.18 sec)
+
+mysql> select * from location;
++------+--------+
+| LID  | LName  |
++------+--------+
+|  111 | pune   |
+|  222 | pune   |
+|  333 | mumbai |
+|  444 | mumbai |
+|  555 | nashik |
++------+--------+
+5 rows in set (0.00 sec)
+
+mysql> alter table employee
+    ->  add primary key (eid);
+Query OK, 0 rows affected (0.85 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table department add primary key (DID);
+Query OK, 0 rows affected (0.83 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table project add primary key (PID);
+Query OK, 0 rows affected (0.77 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table location add primary key (LID);
+Query OK, 0 rows affected (0.81 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+
+mysql> alter table employee alter salary set default 10000;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee add check (salary>=10000);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee add email varchar(30);
+Query OK, 0 rows affected (0.80 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee drop DOB;
+Query OK, 0 rows affected (0.80 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+
+

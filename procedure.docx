@@ -1,0 +1,56 @@
+create procedure find_sal(IN i int)
+begin
+declare salary1 int;
+select salary into salary1 from employee where id=i;
+if salary1<25000 then
+select 'class IV';
+elseif salary1>=25000 and salary1<50000 then
+select 'class III';
+elseif salary1>=50000 and salary1<=75000 then
+select 'class II';
+elseif salary1>=100000 then
+select 'class I';
+end if;
+end
+$$
+
+
+
+
+mysql> create procedure hh(IN r int, OUT detail varchar(90)) begin select name into detail from student where rno=r;  end$$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call hh(3,@d) $$
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @d;
+    -> $$
++--------+
+| @d     |
++--------+
+| deepak |
++--------+
+
+
+
+
+create function chal5(i int) returns varchar(20) 
+begin
+declare sal int;
+declare val varchar(20);
+select salary into sal from employee where id=i;
+if sal<25000 then
+set val='class IV';
+end if;
+return val;
+end
+$$
+
+
+
+
+
+
+
+
+

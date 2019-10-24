@@ -1,0 +1,64 @@
+> use Chinmay 
+
+> show collections;
+order_totals
+practice
+Chinmay 
+employee
+
+> db.employee.find()
+{ "_id" : ObjectId("5d9d8bf094d61cc0381daa26"), "name" : "Ashish", "did" : "101" }
+{ "_id" : ObjectId("5d9d8c2d94d61cc0381daa27"), "name" : "Chinmay", "did" : "102" }
+
+> db.employee.insert({name:'Anush',did:'103'})
+WriteResult({ "nInserted" : 1 })
+
+{
+	"_id" : ObjectId("5d9d8c2d94d61cc0381daa27"),
+	"name" : "Ashish",
+	"did" : "101"
+}
+{
+	"_id" : ObjectId("5d9dbf9b966411b95a6573d3"),
+	"name" : "Chinmay",
+	"did" : "102"
+}
+{
+	"_id" : ObjectId("5d9dbf9b966411b95a6573d3"),
+	"name" : "Anush",
+	"did" : "103"
+}
+
+> db.employee.update({name:'Anush'},{name:'Anusha',did:'104'})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+{
+	"_id" : ObjectId("5d9d8c2d94d61cc0381daa27"),
+	"name" : "Ashish",
+	"did" : "101"
+}
+{
+	"_id" : ObjectId("5d9dbf9b966411b95a6573d3"),
+	"name" : "Chinmay",
+	"did" : "102"
+}
+{
+	"_id" : ObjectId("5d9dc0555c5e0a555d921165"),
+	"name" : "Anusha",
+	"did" : "104"
+}
+
+> db.employee.remove({did:'104'})
+WriteResult({ "nRemoved" : 1 })
+
+> db.employee.find().pretty()
+{
+	"_id" : ObjectId("5d9d8c2d94d61cc0381daa27"),
+	"name" : "Ashish",
+	"did" : "101"
+}
+{
+	"_id" : ObjectId("5d9dbf9b966411b95a6573d3"),
+	"name" : "Chinmay",
+	"did" : "102"
+}

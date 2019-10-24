@@ -1,0 +1,162 @@
+
+mysql> use gaurav;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_gaurav |
++-----------------+
+| department      |
+| employee        |
+| location        |
+| project         |
++-----------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from department;
++-----+-------+
+| DID | DName |
++-----+-------+
+|   1 | IT    |
+|   2 | COMP  |
+|   3 | E&TC  |
+|   4 | MECH  |
+|   5 | CIVIL |
++-----+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee;
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4305 | def   | def-411015,pune | 2017-12-12 |  20000 |    5 | NULL  |
+| 4347 | abc   | abc-411015,pune | 2017-11-12 |  17000 |    1 | NULL  |
+| 4348 | bcd   | bcd-411015,pune | 2017-11-12 |  18000 |    2 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  19000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select sum(salary) as totsal from employee;
++--------+
+| totsal |
++--------+
+|  94000 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select Did,sum(salary) as totsal from employee group by Did;
+ERROR 1054 (42S22): Unknown column 'Did' in 'field list'
+mysql> select * from employee;
++------+-------+-----------------+------------+--------+------+-------+
+| eid  | ename | address         | DOJ        | salary | Pid  | email |
++------+-------+-----------------+------------+--------+------+-------+
+| 4305 | def   | def-411015,pune | 2017-12-12 |  20000 |    5 | NULL  |
+| 4347 | abc   | abc-411015,pune | 2017-11-12 |  17000 |    1 | NULL  |
+| 4348 | bcd   | bcd-411015,pune | 2017-11-12 |  18000 |    2 | NULL  |
+| 4349 | cde   | cde-411015,pune | 2011-10-12 |  20000 |    3 | NULL  |
+| 4350 | cde   | cde-411015,pune | 2017-12-12 |  19000 |    4 | NULL  |
++------+-------+-----------------+------------+--------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc department;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| DID   | int(11)     | NO   | PRI | NULL    |       |
+| DName | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> select Did,sum(salary) as totsal from employee group by Did;
++------+--------+
+| Did  | totsal |
++------+--------+
+| 1    | 17000  |
+| 2    | 18000  |
+| 3    | 19000  |
+| 4    | 20000  |
+| 5    | 21000  |
++------+--------+
+mysql> insert into employee values(4306,"efg","efg-411015,pune","2016-11-11",22000,
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into employee values
+(4307,"fgh","fgh-411015,pune","2016-10-10",22000,2,22,NULL);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into employee values
+(4308,"fgh","fgh-411015,pune","2016-10-10",22000,3,22,NULL);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select Did,sum(salary) as totsal from employee group by Did
+    -> having sum(salary)>25000;
++------+--------+
+| Did  | totsal |
++------+--------+
+|    2 |  40000 |
+|    3 |  41000 |
+|    5 |  43000 |
++------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select Did,count(eid) from employee group by Did;
++------+------------+
+| Did  | count(eid) |
++------+------------+
+|1     |        1   |
+|2     |	2   |
+|3     |	2   |
+|4     |	1   |
+|5     |	2   | 
++------+------------+
+5 rows in set (0.00 sec)
+mysql> select Did,count(eid) from employee where doj>'2012-01-01' and doj<now()
+-> group by Did;
++------+------------+
+| Did  | count(eid) |
++------+------------+
+|1     |        1   |
+|2     |	2   |
+|3     |	1   |
+|4     |	1   |
+|5     |	2   | 
++------+------------+
+
+mysql> select Did,sum(salary) as totsal from employee group by Did;
++------+--------+
+| Did  | totsal |
++------+--------+
+|1     |  17000 |
+|2     |  18000 |
+|3     |  19000 |
+|4     |  20000 |
+|5     |  21000 |
++------+--------+
+
+mysql> select Did,sum(salary) as totsal from employee group by Did
+-> having sum(salary)>25000;
++------+--------+
+| Did  | totsal |
++------+--------+
+|2     | 40000  |
+|3     | 41000  |
+|5     | 43000  |
++------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select Did,sum(salary) as totsal from employee group by Did;
++------+--------+
+| Did  | totsal |
++------+--------+
+|1     |  17000 |
+|2     |  40000 |
+|3     |  41000 |
+|4     |  20000 |
+|5     |  43000 |
++------+--------+
+5 rows in set (0.00 sec)
+
+
